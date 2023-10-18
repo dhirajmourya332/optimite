@@ -10,6 +10,7 @@
 
 ```
 cd authentication-service
+npm install
 npm run start
 ```
 
@@ -17,6 +18,7 @@ npm run start
 
 ```
 cd task-service
+npm install
 npm run start
 ```
 
