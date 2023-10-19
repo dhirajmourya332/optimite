@@ -10,10 +10,7 @@ app.use(bodyParser.json());
 
 //connect to mongoodb database
 //TODO seprate this step from this file and add proper error handler
-mongoose.connect("mongodb://localhost:27017/authenticationService", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGODB_CONNECTION_URI);
 
 //router for /auth endpoint
 app.use("/auth", authRoutes);

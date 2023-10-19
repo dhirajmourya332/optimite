@@ -6,14 +6,17 @@ const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
 
+//body parser middlewar to parse the json body of requests
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://localhost:27017/taskService", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+//connect to the mongodb database
+//TODO seprate this in seprate file with error handling logic
+mongoose.connect(process.env.MONGODB_CONNECTION_URI);
 
+//middleware to authenticate user request
 app.use(authMiddleware);
+
+//pass the /tasks... requests to raskRoutes
 app.use("/tasks", taskRoutes);
 
 module.exports = app;

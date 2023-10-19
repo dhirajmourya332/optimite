@@ -1,6 +1,6 @@
-// task-service/src/routes/taskRoutes.js
 const express = require("express");
-const authMiddleware = require("../middleware/authMiddleware");
+
+//import all the task request handlers
 const {
   getAllTasks,
   createTask,
@@ -10,9 +10,7 @@ const {
 
 const router = express.Router();
 
-//middleware to authenticate user
-router.use(authMiddleware);
-
+//
 router.get("/", getAllTasks);
 router.post("/", createTask);
 router.put("/:id", updateTask);
