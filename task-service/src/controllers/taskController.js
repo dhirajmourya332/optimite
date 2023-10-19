@@ -35,13 +35,20 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { title, description, status, dueDate } = req.body;
-    await Task.findByIdAndUpdate(req.params.id, {
+    //check if requestId is in req params
+    const { id } = req.params.id;
+    if (!id) {
+      res.json({ error: "No task id was found in the url" });
+    }
+
+    const result = await Task.findByIdAndUpdate(id, {
       title,
       description,
       status,
       dueDate,
     });
-    res.json({ message: "Task updated successfully" });
+    if (result) res.json({ message: "Task updated successfully" });
+    else res.json({ error: "no document found with given id" });
   } catch (error) {
     console.error("Error updating task:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -50,8 +57,14 @@ const updateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    await Task.findByIdAndDelete(req.params.id);
-    res.json({ message: "Task deleted successfully" });
+    //check if requestId is in req params
+    const { id } = req.params.id;
+    if (!id) {
+      res.json({ error: "No task id was found in the url" });
+    }
+    const result = await Task.findByIdAndDelete(req.params.id);
+    if (result) res.json({ message: "Task deleted successfully" });
+    else res.json({ error: "no document found with given id" });
   } catch (error) {
     console.error("Error deleting task:", error);
     res.status(500).json({ error: "Internal Server Error" });
